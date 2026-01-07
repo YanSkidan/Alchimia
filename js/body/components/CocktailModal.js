@@ -89,10 +89,10 @@ export class CocktailModal {
         // Заполняем данные
         const width = window.innerWidth;
         if (width < 1024) {
-            image.src = `/images/${cocktail.imageG}`;
+            image.src = `images/${cocktail.imageG}`;
         }
         else {
-            image.src = `/images/${cocktail.image}`;
+            image.src = `images/${cocktail.image}`;
         }
         image.alt = cocktail.name;
         title.textContent = cocktail.name;
