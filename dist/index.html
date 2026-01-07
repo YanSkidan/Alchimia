@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alchimia</title>
+    <link rel="stylesheet" href="css/main.css">
+    <base href="/js/">
+</head>
+<body>
+    <!--ШАПКА-->
+    <header>
+        <div class="hat">
+            <h1 class="hat__title">Alchimia</h1>
+            <p class="hat__subtitle">Найди свой идеальный коктейль</p>
+            <div class="hat__div-search">
+                <input type="search" class="hat__div-search__search" placeholder="Поиск по коктейлям">
+                <input type="button" class="hat__div-search__button" value="Поиск">
+            </div>
+        </div>
+    </header>
+    
+    <!--ОСНОВНОЙ КОНТЕНТ-->
+    <main>
+        <section class="filters">
+            <h2 class="filters__title">Открой свою формулу</h2>
+
+            <!-- 3 кнопки в строку с выпадающими списками -->
+            <div class="filters__dropdowns">
+                <!-- По вкусу -->
+                <div class="filters__dropdown">
+                    <input type="checkbox" id="dropdown-taste" class="filters__dropdown-toggle">
+                    <label for="dropdown-taste" class="filters__dropdown-trigger">
+                        По вкусу
+                        <svg class="filters__dropdown-icon" width="16" height="16" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M8 12L3 7l1-1 4 4 4-4 1 1-5 5z"/>
+                        </svg>
+                    </label>
+                    <!-- КОНТЕЙНЕР ТЕГОВ ДЛЯ "ПО ВКУСУ" -->
+                    <div class="filters__dropdown-tags" data-type="taste">
+                        <!-- Выбранные теги для "По вкусу" будут добавляться сюда -->
+                    </div>
+                    <div class="filters__dropdown-content">
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="taste" value="sweet">
+                            <span class="filters__option-text">Сладкий</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="taste" value="sour">
+                            <span class="filters__option-text">Кислый</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="taste" value="bitter">
+                            <span class="filters__option-text">Горький</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="taste" value="fresh">
+                            <span class="filters__option-text">Свежий</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- По типу -->
+                <div class="filters__dropdown">
+                    <input type="checkbox" id="dropdown-type" class="filters__dropdown-toggle">
+                    <label for="dropdown-type" class="filters__dropdown-trigger">
+                        По типу
+                        <svg class="filters__dropdown-icon" width="16" height="16" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M8 12L3 7l1-1 4 4 4-4 1 1-5 5z"/>
+                        </svg>
+                    </label>
+                    <!-- КОНТЕЙНЕР ТЕГОВ ДЛЯ "ПО ТИПУ" -->
+                    <div class="filters__dropdown-tags" data-type="type">
+                        <!-- Выбранные теги для "По типу" будут добавляться сюда -->
+                    </div>
+                    <div class="filters__dropdown-content">
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="type" value="aperitif">
+                            <span class="filters__option-text">Аперитив</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="type" value="digestif">
+                            <span class="filters__option-text">Дежестив</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="type" value="strong">
+                            <span class="filters__option-text">Крепкий</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="type" value="light">
+                            <span class="filters__option-text">Легкий</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- По составу -->
+                <div class="filters__dropdown">
+                    <input type="checkbox" id="dropdown-ingredients" class="filters__dropdown-toggle">
+                    <label for="dropdown-ingredients" class="filters__dropdown-trigger">
+                        По составу
+                        <svg class="filters__dropdown-icon" width="16" height="16" viewBox="0 0 16 16">
+                            <path fill="currentColor" d="M8 12L3 7l1-1 4 4 4-4 1 1-5 5z"/>
+                        </svg>
+                    </label>
+                    <!-- КОНТЕЙНЕР ТЕГОВ ДЛЯ "ПО СОСТАВУ" -->
+                    <div class="filters__dropdown-tags" data-type="ingredient">
+                        <!-- Выбранные теги для "По составу" будут добавляться сюда -->
+                    </div>
+                    <div class="filters__dropdown-content">
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="ingredient" value="rum">
+                            <span class="filters__option-text">Ром</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="ingredient" value="vodka">
+                            <span class="filters__option-text">Водка</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="ingredient" value="gin">
+                            <span class="filters__option-text">Джин</span>
+                        </label>
+                        <label class="filters__option">
+                            <input type="checkbox" class="filters__checkbox" name="ingredient" value="whiskey">
+                            <span class="filters__option-text">Виски</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- СТАРЫЙ КОНТЕЙНЕР ДЛЯ ВЫБРАННЫХ ФИЛЬТРОВ (оставляем, но больше не используется) -->
+            <div class="filters__selected-tags" style="display: none;">
+                <!-- Этот контейнер больше не используется для тегов -->
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ РЕКОМЕНДАЦИЙ -->
+        <section class="recommendations">
+            <div id="recommendations-container" class="recommendations__grid">
+                <!-- Карточки будут вставлены через JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ШАБЛОН КАРТОЧКИ КОКТЕЙЛЯ -->
+    <template id="cocktail-card-template">
+        <article class="cocktail-card" data-id="">
+            <div class="cocktail-card__image-container">
+                <img src="" alt="" class="cocktail-card__image" loading="lazy">
+                <div class="cocktail-card__alcohol-badge"></div>
+            </div>
+            
+            <div class="cocktail-card__content">
+                <div class="cocktail-card__header">
+                    <h3 class="cocktail-card__title"></h3>
+                    <span class="cocktail-card__glass"></span>
+                </div>
+                
+                <p class="cocktail-card__description"></p>
+                
+                <div class="cocktail-card__meta">
+                    <span class="cocktail-card__category"></span>
+                    <span class="cocktail-card__ingredients-count"></span>
+                </div>
+                
+                <div class="cocktail-card__tags"></div>
+            </div>
+        </article>
+    </template>
+
+    <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ДЕТАЛЕЙ -->
+    <dialog id="cocktail-modal" class="cocktail-modal">
+        <div class="cocktail-modal__content">
+            <button class="cocktail-modal__close" aria-label="Закрыть">×</button>
+            
+            <div class="cocktail-detail">
+                <div class="cocktail-detail__image-container">
+                    <img src="" alt="" class="cocktail-detail__image">
+                    <div class="cocktail-detail__alcohol-badge"></div>
+                </div>
+                
+                <div class="cocktail-detail__info">
+                    <h2 class="cocktail-detail__title"></h2>
+                    
+                    <div class="cocktail-detail__meta">
+                        <span class="cocktail-detail__category"></span>
+                        <span class="cocktail-detail__glass"></span>
+                        <div class="cocktail-detail__tags"></div>
+                    </div>
+                    
+                    <div class="cocktail-detail__description">
+                        <h3 class="cocktail-detail__subtitle">Описание</h3>
+                        <p class="cocktail-detail__text"></p>
+                    </div>
+                    
+                    <div class="cocktail-detail__ingredients">
+                        <h3 class="cocktail-detail__subtitle">Ингредиенты</h3>
+                        <ul class="cocktail-detail__list"></ul>
+                    </div>
+                    
+                    <div class="cocktail-detail__instructions">
+                        <h3 class="cocktail-detail__subtitle">Приготовление</h3>
+                        <ol class="cocktail-detail__list"></ol>
+                    </div>
+                    
+                    <div class="cocktail-detail__history">
+                        <h3 class="cocktail-detail__subtitle">История</h3>
+                        <p class="cocktail-detail__text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
