@@ -29,7 +29,7 @@ export class CocktailCard {
         const tagsContainer = card.querySelector('.cocktail-card__tags');
         // Заполняем
         card.dataset.id = this.cocktail.id;
-        img.src = `/images/${this.cocktail.imageG}`;
+        img.src = `images/${this.cocktail.imageG}`;
         img.alt = this.cocktail.name;
         title.textContent = this.cocktail.name;
         desc.textContent = this.cocktail.description;
