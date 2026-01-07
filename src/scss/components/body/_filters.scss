@@ -1,0 +1,469 @@
+//=========FILTER==========
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use 'sass:color';
+
+//Стилизация блока фильтров
+.filters{
+  //Форма и размеры
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 150px;
+  border-radius: 35px;
+  position: relative;
+  z-index: 1000;
+  transform: translateZ(0);
+  isolation: isolate;
+  pointer-events: auto;
+  
+  // АНИМАЦИЯ ПОЯВЛЕНИЯ
+  animation: smoothAppear 0.8s ease-out;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  
+  // ПАРЯЩИЙ ЭФФЕКТ
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  
+  //Эффект при наведении
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(80, 80, 80, 0.3),
+      inset 0 1px 0 rgba(120, 120, 120, 0.15);
+  }
+
+  // ТЕМНЫЙ С ТЕКСТУРОЙ
+  background: 
+    linear-gradient(135deg, 
+      rgba(27, 26, 24, 0.9) 0%,
+      rgba(33, 31, 29, 0.95) 100%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.008) 1px,
+      rgba(255, 255, 255, 0.008) 2px
+    );
+  
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(60, 60, 60, 0.2),
+    inset 0 1px 0 rgba(100, 100, 100, 0.1);
+  
+  //Контент внутри
+  border: none;
+  padding: 25px;
+  padding-top: 15px;
+  font-family: $font-body;
+  
+  //Запрет на выделения текста
+  @include no-highlighting;
+  position: relative;
+  
+  //Заголовок
+  &__title{
+    //Стилизация
+    color: $color-gold-midle;
+    font-family: $font-heading;
+    font-size: clamp(23px, 2vw, 40px);
+    text-align: center;
+    font-weight: 450;
+    width: 100%;
+    margin-bottom: 30px;
+    
+    position: relative;
+    
+    //Подчеркивание
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        $color-gold-easy,
+        transparent
+      );
+      border-radius: 2px;
+    }
+  }
+  
+  // Контейнер выпадающих списков
+  &__dropdowns {
+    //Расположение чекбоксов внутри контейнера
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+    // На мобильных тоже в строку, но с меньшим gap
+    @include mobile {
+      gap: 9px;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+  }
+  
+  // Выпадающий список
+  &__dropdown {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    // Для последнего dropdown смещаем меню влево на мобильных
+    &:last-child {
+      @include mobile {
+        .filters__dropdown-content {
+          left: auto;
+          right: 0;
+        }
+      }
+    }
+  }
+  
+  // Чекбокс для переключения
+  &__dropdown-toggle {
+    display: none;
+    
+    // Когда чекбокс отмечен - показываем контент
+    &:checked ~ .filters__dropdown-content {
+      display: block;
+      animation: smoothAppear 0.3s ease-out;
+    }
+    
+    // Поворачиваем иконку
+    &:checked ~ .filters__dropdown-trigger .filters__dropdown-icon {
+      transform: rotate(180deg);
+    }
+    
+    // Подсвечиваем триггер
+    &:checked ~ .filters__dropdown-trigger {
+      background: linear-gradient(135deg, rgba(240, 217, 160, 0.1), rgba(240, 217, 160, 0.05));
+      border-color: $color-gold-easy;
+    }
+    
+    //Отслеживаем открытые и скрытые меню
+    @include mobile {
+      .filters__dropdown-content {
+        display: none;
+      }
+      
+      .filters__dropdown-toggle:checked ~ .filters__dropdown-content {
+        display: block;
+      }
+    }
+  }
+  
+  // Кнопка-триггер
+  &__dropdown-trigger {
+    //Визуал кнопки
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #232222, #202020);
+    border: 1px solid rgba(240, 217, 160, 0.3);
+    border-radius: 15px;
+    color: $color-gold-easy;
+    font-family: $font-body;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    text-align: center;
+    
+    //Анимация при наведении
+    &:hover {
+      background: linear-gradient(135deg, #2a2a2a, #252525);
+      border-color: rgba(240, 217, 160, 0.5);
+    }
+    
+    // Стиль когда есть выбранные галочки
+    &.has-selection {
+      background: linear-gradient(135deg, 
+        rgba(213, 192, 140, 0.15), 
+        rgba(240, 217, 160, 0.08)
+      );
+      border: 1.5px solid $color-gold-easy;
+      color: color.adjust($color-gold-easy, $lightness: 8%);
+      
+      // Иконка ярче
+      .filters__dropdown-icon {
+        color: color.adjust($color-gold-easy, $lightness: 15%);
+      }
+      
+      // Эффект при наведении
+      &:hover {
+        background: linear-gradient(135deg, 
+          rgba(240, 217, 160, 0.2), 
+          rgba(240, 217, 160, 0.12)
+        );
+        border-color: color.adjust($color-gold-easy, $lightness: 5%);
+      }
+    }
+    
+    // На мобильных уменьшаем
+    @include mobile {
+      font-size: 13.5px;
+      padding: 6px 10px;
+      min-height: 38px;
+      
+      // Адаптация для мобильных
+      &.has-selection {
+        background: linear-gradient(135deg, 
+          rgba(189, 172, 129, 0.12), 
+          rgba(240, 217, 160, 0.06)
+        );
+      }
+    }
+  }
+  
+  // Контейнер для тегов под каждым фильтром
+  &__dropdown-tags {
+    display: none; /* Скрыто по умолчанию */
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    min-height: 28px;
+    align-items: center;
+    justify-content: flex-start;
+    
+    &.has-tags {
+      display: flex;
+    }
+    
+    @include mobile {
+      gap: 4px;
+      margin-top: 6px;
+    }
+  }
+  
+  // Иконка стрелки
+  &__dropdown-icon {
+    transition: transform 0.3s ease;
+    color: $color-gold-easy;
+    flex-shrink: 0;
+    margin-left: 8px;
+    
+    @include mobile {
+      margin-left: 4px;
+      width: 12px;
+      height: 12px;
+    }
+  }
+  
+  // Выпадающий контент - ФИКСИРОВАННАЯ ПОЗИЦИЯ
+  &__dropdown-content {
+    //Визуал меню
+    display: none;
+    position: absolute;
+    top: 100%; // Остается привязанным к триггеру
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #232222, #1a1a1a);
+    border: 1px solid rgba(240, 217, 160, 0.3);
+    border-top: 1px solid rgba(240, 217, 160, 0.3);
+    padding: 15px;
+    z-index: 1001; // Выше тегов
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-top: 4px; // Фиксированный отступ от триггера
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    pointer-events: auto;
+    
+    // УБРАЛИ адаптацию под теги - меню теперь всегда в одной позиции
+    
+    // На мобильных увеличиваем ширину меню
+    @include mobile {
+      min-width: 180px;
+      width: auto;
+      left: 0;
+      right: auto;
+      
+      // Для последнего dropdown смещаем
+      .filters__dropdown:last-child & {
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+  
+  // Опция чекбокса
+  &__option {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(240, 217, 160, 0.1);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &:hover {
+      background: rgba(240, 217, 160, 0.05);
+      margin: 0 -15px;
+      padding: 10px 15px;
+      
+      @include mobile {
+        margin: 0 -12px;
+        padding: 10px 12px;
+      }
+    }
+  }
+  
+  // Чекбокс опции
+  &__checkbox {
+    display: none;
+    
+    // Стили для отмеченного чекбокса
+    &:checked + .filters__option-text {
+      color: $color-gold-easy;
+      font-weight: 500;
+      
+      &::before {
+        background: $color-gold-easy;
+        border-color: $color-gold-easy;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 50%;
+        transform: translateY(-60%) rotate(45deg);
+        width: 5px;
+        height: 9px;
+        border: solid #2a2a2a;
+        border-width: 0 2px 2px 0;
+      }
+    }
+  }
+  
+  // Текст опции
+  &__option-text {
+    position: relative;
+    color: rgba(240, 217, 160, 0.8);
+    font-family: $font-body;
+    font-size: 14px;
+    padding-left: 32px;
+    transition: all 0.3s ease;
+    line-height: 1.4;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(240, 217, 160, 0.5);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    @include mobile {
+      font-size: 13px;
+      padding-left: 28px;
+    }
+  }
+  
+  // АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ
+  @include tablet {
+    width: 95%;
+    min-height: auto;
+    border-radius: 20px;
+    padding: 20px 15px;
+  }
+  
+  @include mobile {
+    width: 95%;
+    border-radius: 15px;
+    padding: 15px 10px;
+  }
+}
+
+// ===== СТИЛИ ДЛЯ ВЫБРАННЫХ ТЕГОВ =====
+.selected-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-family: $font-body;
+  font-size: 14px; // Слегка увеличили
+  color: $color-gold-easy;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  
+  // УБРАЛИ ВСЕ РАМКИ И ОБВОДКИ
+  border: none;
+  
+  &:hover {
+    background: rgba(198, 183, 145, 0.12); // Более насыщенный при наведении
+  }
+  
+  &__label {
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  
+  &__remove {
+    background: none;
+    border: none;
+    color: rgba(240, 217, 160, 0.7);
+    font-size: 23px; // УВЕЛИЧИЛИ РАЗМЕР КРЕСТИКА
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    width: 20px; // УВЕЛИЧИЛИ
+    height: 20px; // УВЕЛИЧИЛИ
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+    margin-left: 2px;
+    
+    &:hover {
+      background: rgba(240, 217, 160, 0.15);
+      color: rgba(240, 217, 160, 0.9);
+      transform: scale(1.1); // Легкое увеличение при наведении
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+  
+  @include mobile {
+    font-size: 13px;
+    padding: 4px 8px;
+    gap: 4px;
+    
+    &__remove {
+      font-size: 20px; // Чуть меньше на мобильных, но все равно больше
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// ===== СТАРЫЙ ОБЩИЙ КОНТЕЙНЕР (скрываем) =====
+.filters__selected-tags:not(.filters__dropdown-tags) {
+  display: none !important;
+}

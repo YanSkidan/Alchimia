@@ -1,0 +1,191 @@
+// ===== HEADER =====
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:color';
+header {
+  //Расположение текста по центру
+  text-align: center;
+  //Фон
+  @include header-bg;
+  //Размеры
+  width: 100%;
+  min-height: 300px;
+  //Расположение контента по центру
+  @include flex-center;
+  flex-direction: column;
+  //Отступы
+  padding: 20px;
+  box-sizing: border-box;
+  @include mobile{
+    min-height: 250px;
+    padding-bottom: 0px;
+  }
+  //Настройка контента шапки
+  .hat {
+    //Занимает всю ширину header
+    width: 100%;
+    //Отступы сверху и снизу контента
+    padding-top: 65px;
+    padding-bottom: 40px;
+
+    //Расположение контента по центру
+    @include flex-center;
+    flex-direction: column;
+    //Настройка заголовка
+    @include mobile{
+      padding-top: 45px;
+      padding-bottom: 15px;
+    }
+    &__title {
+      //Цвет + тени + Шрифты + размер
+      color: $color-gold;
+      @include text-glow;
+      font-weight: 600;
+      font-family: $font-heading;
+      font-size: clamp(28px, 3.7vw + 1rem, 80px);
+      letter-spacing: clamp(2px, 0.5vw, 3px);
+      line-height: 1.2;
+      //Без отступа
+      margin: 0;
+      //Запрет на выделение текста
+      @include no-highlighting;
+      //Под мобильное устройство
+      @include mobile {
+        //Изменяем размеры
+        font-size: clamp(40px, 13vw, 65px);
+        letter-spacing: 1px;
+      }
+    }
+    
+    //Подзаголовок
+    &__subtitle {
+      color: $color-gold-light;
+      font-size: clamp(16px, 1.58vw, 26px);
+      font-family: $font-body;
+      margin-top: 0px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      //Запрет на выделение текста
+      @include no-highlighting;
+      //Под мобильное устройство
+      @include mobile {
+        font-size: clamp(16px, 4.6vw, 22px);
+        margin-top: 3px;
+      }
+    }
+
+    //Блок с поисковой строкой и кнопкой поиск
+    &__div-search{
+      //Отступ сверху
+      margin-top: 35px;
+      //Шрифт
+      font-family: $font-body;
+      //Контент в центре
+      @include flex-center;
+      //Ширина блока
+      width: 50%;
+      // Адаптация для мобильных устройств
+      @include mobile {
+        width: 100%; // Увеличиваем ширину на мобильных
+        margin-top: 27px;
+      }
+      //Поисковая строка
+      &__search{
+        //Ширина на весь блок + фиксированная высота
+        width: 100%;
+        height: 38px;
+        //Только левые рамки
+        border-radius: 10px 0 0 10px;
+        //Цвет фона + цвет рамки + цвет текста
+        border: 1px solid $color-gold-midle;
+        background: #2c2c2c;
+        color: white;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        //Лишняя рамка
+        border-right: none;
+        //Убираем крестик из поисковой строки
+        @include cross-none;
+        //Размер+шрифт текста
+        @include text-settings;
+        //Отступ текста слева
+        padding-left: 13px;
+        // Адаптация для мобильных
+        @include mobile {
+          height: 42px; // Немного увеличиваем для удобства
+          font-size: 16px; // Важно для iOS чтобы не зумилось
+          padding-left: 15px;
+        }
+        //Состояние фокуса
+        transition: all 0.3s ease;
+        &:focus {
+          outline: none;
+          border: 1px solid transparent;
+          background: 
+            linear-gradient(#343434, #2b2a2a) padding-box,
+            linear-gradient(45deg, $color-gold-midle, $color-gold-light) border-box;
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+        }
+        // Плейсхолдер для мобильных
+        &::placeholder {
+          @include mobile {
+            font-size: 14px;
+          }
+        }
+      }
+      //Кнопка
+      &__button{
+        //Только правые закругления
+        border-radius: 0 8px 8px 0;
+        //Рамка
+        border: 1px solid $color-gold-midle;
+        //Высота
+        height: 38px;
+        //Настройка цветов
+        background: $color-gold-midle;
+        color: $color-brown-text; 
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+        padding-left: 15px;
+        padding-right: 15px;
+        //Текст внутри кнопки
+        @include text-settings;
+        @include flex-center;
+        cursor: pointer;
+        //Состояние фокуса
+        transition: all 0.2s ease;
+        // Адаптация для мобильных
+        @include mobile {
+          height: 42px;
+          padding-left: 15px;
+          padding-right: 15px;
+          font-size: 16px;
+          min-width: 65px; // Чтобы кнопка не была слишком узкой
+          font-weight: 500;
+          width: auto !important;
+          flex: none !important;
+        }
+        .hat__div-search__search:focus + & {
+          border: 1px solid transparent;
+          border-right: none;
+          background: 
+            linear-gradient(color.adjust($color-gold-midle, $lightness: 5%), $color-gold-midle) padding-box,
+            linear-gradient(45deg, $color-gold-midle, $color-gold-light) border-box;
+          box-shadow: 0 0 8px rgba(240, 217, 160, 0.3);
+        }
+        
+        //При наведении на кнопку
+        &:hover {
+          background: color.adjust($color-gold-midle, $lightness: 3%);
+        }
+        //При нажатии на кнопку
+        &:active {
+          transform: translateY(0);
+          background: color.adjust($color-gold-midle, $lightness: -2%);
+          // Для мобильных - легкий эффект нажатия
+          @include mobile {
+            transform: scale(0.98);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+// ===== ABSTRACTS =====
+@use 'abstracts/variables';
+@use 'abstracts/mixins';
+@use 'abstracts/fonts';
+
+// ===== BASE =====
+@use 'base/reset';
+
+// ===== COMPONENTS =====
+@use 'components/header';
+@use 'components/body/index-body';
+// @use 'components/footer';  // пока не используется

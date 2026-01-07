@@ -1,0 +1,404 @@
+// ===== МОДАЛЬНОЕ ОКНО КОКТЕЙЛЯ =====
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+@use 'sass:color';
+
+.cocktail-modal {
+  // Сброс стилей диалога
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 90vw;
+  width: 900px;
+  max-height: 90vh;
+  border-radius: 0;
+  overflow: visible;
+  position: relative;
+  margin:auto;
+  // Затемнение фона
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+  }
+
+  // Контейнер контента
+  &__content {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a, #121212);
+    border: 1px solid rgba(240, 217, 160, 0.25);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 
+      0 25px 60px rgba(0, 0, 0, 0.8),
+      0 0 0 1px rgba(240, 217, 160, 0.15);
+  }
+
+  // Кнопка закрытия
+  // Кнопка закрытия
+&__close {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 45px;
+  height: 45px;
+  border: none;
+  background: none; // Изменено с background-color
+  color: $color-gold-easy;
+  font-size: 40px;
+  font-weight: 300;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  @include flex-center;
+  @include no-highlighting;
+  
+  // Важно! Убираем outline и другие дефолтные стили
+  outline: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  
+  @include mobile {
+    top: 2px;
+    right: 2px;
+    width: 33px;
+    height: 33px;
+    font-size: 30px;
+  }
+}
+}
+
+// Детали коктейля внутри модалки
+.cocktail-detail {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 40px;
+  padding: 40px;
+  
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  @include mobile {
+    padding: 25px 20px;
+    gap: 25px;
+  }
+
+  // Блок с изображением
+  &__image-container {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(240, 217, 160, 0.2);
+    @include tablet{
+      aspect-ratio: 5/4;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  &__alcohol-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-family: $font-body;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    @include no-highlighting;
+    
+    &.alcoholic {
+      background: linear-gradient(135deg, #c41e1e, #8b0000);
+      color: white;
+      box-shadow: 0 4px 12px rgba(196, 30, 30, 0.5);
+    }
+    
+    &.non-alcoholic {
+      background: linear-gradient(135deg, #2e8b57, #1f5c3a);
+      color: white;
+      box-shadow: 0 4px 12px rgba(46, 139, 87, 0.5);
+    }
+    
+    @include tablet {
+      padding: 4px 8px;
+      font-size: 11px;
+      top: 10px;
+      right: 10px;
+    }
+  }
+
+  // Блок с информацией
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow-y: auto;
+    max-height: 70vh;
+    padding-right: 10px;
+    
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba(240, 217, 160, 0.05);
+      border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(240, 217, 160, 0.3);
+      border-radius: 3px;
+    }
+    
+    @include mobile {
+      max-height: 60vh;
+    }
+  }
+
+  // Заголовок
+  &__title {
+    font-family: $font-heading;
+    font-size: 36px;
+    color: $color-gold-light;
+    margin: 0;
+    line-height: 1.2;
+    
+    @include tablet {
+      font-size: 32px;
+    }
+    
+    @include mobile {
+      font-size: 28px;
+    }
+  }
+
+  // Мета-информация
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(240, 217, 160, 0.15);
+  }
+
+  &__category,
+  &__glass {
+    font-family: $font-body;
+    font-size: 15px;
+    color: $color-gold-easy;
+    background: rgba(240, 217, 160, 0.1);
+    padding: 6px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(240, 217, 160, 0.2);
+    
+    @include mobile {
+      font-size: 13px;
+      padding: 5px 12px;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__tag {
+    font-family: $font-body;
+    font-size: 13px;
+    color: rgba(240, 217, 160, 0.9);
+    background: rgba(240, 217, 160, 0.08);
+    padding: 4px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(240, 217, 160, 0.15);
+    
+    @include mobile {
+      font-size: 11px;
+      padding: 3px 8px;
+    }
+  }
+
+  // Подзаголовки секций
+  &__subtitle {
+    font-family: $font-heading;
+    font-size: 22px;
+    color: $color-gold-easy;
+    margin: 0 0 15px 0;
+    position: relative;
+    padding-bottom: 8px;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, $color-gold-easy, transparent);
+      border-radius: 2px;
+    }
+    
+    @include mobile {
+      font-size: 19px;
+    }
+  }
+
+  // Текст
+  &__text {
+    font-family: $font-body;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    
+    @include mobile {
+      font-size: 15px;
+    }
+  }
+
+  // Списки (ингредиенты и инструкции)
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    // Для неупорядоченного списка (ингредиенты)
+    &:first-of-type {
+      li {
+        padding-left: 25px;
+        position: relative;
+        
+        &::before {
+          content: '•';
+          position: absolute;
+          left: 0;
+          color: $color-gold-easy;
+          font-size: 20px;
+        }
+      }
+    }
+    
+    // Для упорядоченного списка (инструкции)
+    &:last-of-type {
+      counter-reset: step-counter;
+      
+      li {
+        padding-left: 30px;
+        position: relative;
+        counter-increment: step-counter;
+        
+        &::before {
+          content: counter(step-counter);
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: $color-gold-easy;
+          font-family: $font-body;
+          font-weight: 600;
+          background: rgba(240, 217, 160, 0.1);
+          border: 1px solid rgba(240, 217, 160, 0.2);
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          @include flex-center;
+          font-size: 12px;
+        }
+      }
+    }
+    
+    li {
+      font-family: $font-body;
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 12px;
+      padding-left: 0;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      @include mobile {
+        font-size: 14px;
+      }
+    }
+  }
+
+  // Отдельные секции
+  &__description,
+  &__ingredients,
+  &__instructions,
+  &__history {
+    background: rgba(240, 217, 160, 0.03);
+    border: 1px solid rgba(240, 217, 160, 0.08);
+    border-radius: 15px;
+    padding: 20px;
+    
+    @include mobile {
+      padding: 15px;
+    }
+  }
+
+  // История отдельно
+  &__history {
+    background: rgba(240, 217, 160, 0.02);
+    border-style: dashed;
+  }
+}
+
+// Анимация открытия модалки
+@keyframes modalAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// Применяем анимацию
+.cocktail-modal[open] {
+  animation: modalAppear 0.4s ease-out;
+}
+#cocktail-modal img,
+.cocktail-modal img {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}

@@ -1,0 +1,14 @@
+// ===== СБРОС СТИЛЕЙ =====
+@use '../abstracts/variables' as *;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-body;
+  font-weight: 400;
+}

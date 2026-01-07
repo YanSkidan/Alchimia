@@ -1,0 +1,13 @@
+//======BODY & ITS COMPONENTS=======
+@use 'sass:color';
+
+// Глобальные стили body
+
+
+// Импорт компонентов body
+@use 'main-body';
+@use 'filters';
+@use 'cocktail-card';
+@use 'recommendations-grid';
+@use 'cocktail-modal'; // ← ДОБАВЬ
+@use 'animations';

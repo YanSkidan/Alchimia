@@ -1,0 +1,75 @@
+// ===== МИКСИНЫ =====
+@use 'variables' as *;
+@use 'sass:color';
+//Миксин расположения по центру
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+//Миксин настройки текста
+@mixin text-settings{
+  font-family: $font-body;
+  font-size: 16px;
+}
+//Убрать крестик в поисковой строке
+@mixin cross-none{
+    &::-webkit-search-cancel-button {
+        display: none;
+    }
+    
+    &::-moz-search-cancel-button {
+        display: none;
+    }
+}
+//Тени
+@mixin text-glow {
+  text-shadow: $shadow-heavy, $shadow-medium, $shadow-light;
+}
+//Запрет на выделение текста
+@mixin no-highlighting{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+//Фон для header
+@mixin header-bg{
+  background: linear-gradient(135deg, 
+    color.adjust($color-black, $lightness: 2%) 0%, 
+    color.adjust($color-dark, $lightness: 3%) 25%, 
+    color.adjust($color-brown, $lightness: 4%) 50%, 
+    color.adjust($color-dark, $lightness: 2.5%) 75%, 
+    $color-black 100%
+  );
+}
+//Фон для main
+@mixin main-bg{
+  background: 
+      /* Основной градиент */
+      linear-gradient(135deg, 
+        $color-dark 0%,  
+        color.adjust($color-dark, $lightness: 3%) 25%,
+        color.adjust($color-brown, $lightness: -3%) 50%,
+        $color-brown 75%,
+        color.adjust($color-dark, $lightness: -4%) 100%
+      ),
+      /* Еле заметное центральное свечение */
+      radial-gradient(
+          circle at 50% 50%,
+          rgba(240, 217, 160, 0.02) 0%,
+          transparent 50%
+      );
+}
+//Под мобильное устройство
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}

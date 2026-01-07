@@ -1,0 +1,26 @@
+// ===== ПЕРЕМЕННЫЕ =====
+// Цвета
+$color-black: #000000;
+$color-dark: #0F0F0F;
+$color-brown: #25221E;
+$color-gold: #f0d9a0;
+$color-gold-light: #ece5d5;
+$color-gold-midle:#ead7a4;
+$color-brown-text: #3a2e1f;
+$color-gold-easy:#f9e9bd;
+// Шрифты
+$font-heading: 'Cormorant Garamond', serif;
+$font-body: 'Lora', serif;
+
+// Тени
+$shadow-heavy: 0 2px 4px rgba(0,0,0,0.8);
+$shadow-medium: 0 4px 12px rgba(0,0,0,0.5);
+$shadow-light: 0 6px 20px rgba(0,0,0,0.3);
+
+// Брейкпоинты
+$mobile: 480px;
+$tablet: 768px;
+// Новые переменные для main
+$color-gold-transparent: rgba(240, 217, 160, 0.06);
+$color-dark-transparent: rgba(15, 15, 15, 0.7);
+$color-black-transparent: rgba(0, 0, 0, 0.8);
